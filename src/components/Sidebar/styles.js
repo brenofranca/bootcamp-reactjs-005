@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
+import { Spinner } from '../Loading/styles';
+
 export const Container = styled.aside`
   height: 100%;
-  width: 200px;
+  min-width: 200px;
   background: #121212;
   color: #b3b3b3;
 
@@ -24,6 +26,9 @@ export const Nav = styled.ul`
   }
 
   li {
+    display: flex;
+    align-items: center;
+
     span {
       font-size: 11px;
       text-transform: uppercase;
@@ -31,6 +36,12 @@ export const Nav = styled.ul`
       letter-spacing: 1.11px;
       font-weight: 300;
     }
+
+    ${Spinner} {
+      height: 12px;
+      margin-left: 5px;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
