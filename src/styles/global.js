@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import 'rc-slider/assets/index.css';
+
 import 'font-awesome/css/font-awesome.min.css';
 
 export const GlobalStyle = createGlobalStyle`
@@ -10,9 +12,13 @@ export const GlobalStyle = createGlobalStyle`
     outline: 0;
   }
 
+  html, body, #root {
+    height: 100%;
+  }
+
   body {
-    font-family: sans-serif;
-    background: #333;
+    font-family: 'Montserrat', sans-serif;
+    background: #181818;
     color: #fff;
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
