@@ -42,7 +42,7 @@ class Playlist extends Component {
     getPlaylistDetailsRequest: PropTypes.func.isRequired,
     loadSong: PropTypes.func.isRequired,
     currentSong: PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.number,
     }),
   };
 
@@ -135,7 +135,7 @@ músicas
                 <SongItem
                   key={song.id}
                   onClick={() => this.setState({ selectedSong: song })}
-                  onDoubleClick={() => loadSong(song)}
+                  onDoubleClick={() => loadSong(song, playlist.songs)}
                   selected={selectedSong && selectedSong.id === song.id}
                   playing={currentSong && currentSong.id === song.id}
                 >
