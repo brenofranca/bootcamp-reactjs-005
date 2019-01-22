@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Loading from '../../components/Loading';
+
+import { Creators as PlayerActions } from '../../store/ducks/player';
 import { Creators as PlaylistDetailsActions } from '../../store/ducks/playlistDetails';
 
-import { Container, Header, SongList } from './styles';
+import {
+  Container, Header, SongList, SongItem,
+} from './styles';
 
 import ClockIcon from '../../assets/images/clock.svg';
 import PlusIcon from '../../assets/images/plus.svg';
@@ -18,13 +22,15 @@ class Playlist extends Component {
         title: PropTypes.string.isRequired,
         thumbnail: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
-        songs: PropTypes.arrayOf(PropTypes.shape({
-          id: PropTypes.number.isRequired,
-          title: PropTypes.string.isRequired,
-          author: PropTypes.string.isRequired,
-          album: PropTypes.string.isRequired,
-          duration: PropTypes.string.isRequired,
-        }))
+        songs: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+            author: PropTypes.string.isRequired,
+            album: PropTypes.string.isRequired,
+            duration: PropTypes.string.isRequired,
+          }),
+        ),
       }),
       loading: PropTypes.bool,
     }).isRequired,
@@ -34,6 +40,14 @@ class Playlist extends Component {
       }).isRequired,
     }).isRequired,
     getPlaylistDetailsRequest: PropTypes.func.isRequired,
+    loadSong: PropTypes.func.isRequired,
+    currentSong: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  };
+
+  state = {
+    selectedSong: null,
   };
 
   componentDidMount() {
@@ -72,8 +86,12 @@ class Playlist extends Component {
 
   renderDetails = () => {
     const {
+      loadSong,
+      currentSong,
       playlistDetails: { data: playlist },
     } = this.props;
+
+    const { selectedSong } = this.state;
 
     return (
       <Container>
@@ -114,7 +132,13 @@ músicas
               </tr>
             ) : (
               playlist.songs.map(song => (
-                <tr key={song.id}>
+                <SongItem
+                  key={song.id}
+                  onClick={() => this.setState({ selectedSong: song })}
+                  onDoubleClick={() => loadSong(song)}
+                  selected={selectedSong && selectedSong.id === song.id}
+                  playing={currentSong && currentSong.id === song.id}
+                >
                   <td>
                     <img src={PlusIcon} alt="Adicionar" />
                   </td>
@@ -122,7 +146,7 @@ músicas
                   <td>{song.author}</td>
                   <td>{song.album}</td>
                   <td>{song.duration}</td>
-                </tr>
+                </SongItem>
               ))
             )}
           </tbody>
@@ -145,10 +169,11 @@ músicas
 }
 
 const mapStateToProps = state => ({
+  currentSong: state.player.currentSong,
   playlistDetails: state.playlistDetails,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PlaylistDetailsActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ ...PlaylistDetailsActions, ...PlayerActions }, dispatch);
 
 export default connect(
   mapStateToProps,
