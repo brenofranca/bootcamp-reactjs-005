@@ -1,9 +1,14 @@
 import { all, takeLatest } from 'redux-saga/effects';
 
-import { Types as DefaultTypes } from '../ducks/default';
+import { Types as PlaylistsTypes } from '../ducks/playlists';
+import { Types as PlaylistDetailsTypes } from '../ducks/playlistDetails';
 
-import { addDefault } from './default';
+import { getPlaylists } from './playlists';
+import { getPlaylistDetails } from './playlistDetails';
 
 export default function* rootSaga() {
-  yield all([takeLatest(DefaultTypes.ADD_REQUEST, addDefault)]);
+  yield all([
+    takeLatest(PlaylistsTypes.GET_REQUEST, getPlaylists),
+    takeLatest(PlaylistDetailsTypes.GET_REQUEST, getPlaylistDetails),
+  ]);
 }
