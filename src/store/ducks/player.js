@@ -7,6 +7,8 @@ export const Types = {
   NEXT: 'player/NEXT',
   PREV: 'player/PREV',
   PLAYING: 'player/PLAYING',
+  SET_POSITION: 'player/SET_POSITION',
+  HANDLE_POSITION: 'player/HANDLE_POSITION',
 };
 
 const INITIAL_STATE = {
@@ -15,6 +17,7 @@ const INITIAL_STATE = {
   status: Sound.status.PLAYING,
   position: null,
   duration: null,
+  positionShown: null,
 };
 
 export default function player(state = INITIAL_STATE, action) {
@@ -34,7 +37,14 @@ export default function player(state = INITIAL_STATE, action) {
       const currentIndex = state.list.findIndex(song => song.id === state.currentSong.id);
       const next = state.list[currentIndex + 1];
 
-      if (next) return { ...state, currentSong: next, status: Sound.status.PLAYING };
+      if (next) {
+        return {
+          ...state,
+          currentSong: next,
+          status: Sound.status.PLAYING,
+          position: null,
+        };
+      }
 
       return { ...state };
     }
@@ -42,12 +52,23 @@ export default function player(state = INITIAL_STATE, action) {
       const currentIndex = state.list.findIndex(song => song.id === state.currentSong.id);
       const prev = state.list[currentIndex - 1];
 
-      if (prev) return { ...state, currentSong: prev, status: Sound.status.PLAYING };
+      if (prev) {
+        return {
+          ...state,
+          currentSong: prev,
+          status: Sound.status.PLAYING,
+          position: null,
+        };
+      }
 
       return { ...state };
     }
     case Types.PLAYING:
       return { ...state, ...action.payload };
+    case Types.HANDLE_POSITION:
+      return { ...state, positionShown: state.duration * action.payload.percent };
+    case Types.SET_POSITION:
+      return { ...state, position: state.duration * action.payload.percent, positionShown: null };
     default:
       return state;
   }
@@ -65,5 +86,13 @@ export const Creators = {
   playing: ({ position, duration }) => ({
     type: Types.PLAYING,
     payload: { position, duration },
+  }),
+  setPosition: percent => ({
+    type: Types.SET_POSITION,
+    payload: { percent },
+  }),
+  handlePosition: percent => ({
+    type: Types.HANDLE_POSITION,
+    payload: { percent },
   }),
 };
