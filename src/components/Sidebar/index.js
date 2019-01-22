@@ -43,7 +43,7 @@ class Sidebar extends Component {
               <Link to="/">Navegar</Link>
             </li>
             <li>
-              <a>Rádio</a>
+              <a href="asddsa">Rádio</a>
             </li>
           </Nav>
 
@@ -52,31 +52,31 @@ class Sidebar extends Component {
               <span>SUA BIBLIOTECA</span>
             </li>
             <li>
-              <a>Seu Daily Mix</a>
+              <a href="asddsa">Seu Daily Mix</a>
             </li>
             <li>
-              <a>Tocadas recentemente</a>
+              <a href="asddsa">Tocadas recentemente</a>
             </li>
             <li>
-              <a>Músicas</a>
+              <a href="asddsa">Músicas</a>
             </li>
             <li>
-              <a>Álbums</a>
+              <a href="asddsa">Álbums</a>
             </li>
             <li>
-              <a>Artistas</a>
+              <a href="asddsa">Artistas</a>
             </li>
             <li>
-              <a>Estações</a>
+              <a href="asddsa">Estações</a>
             </li>
             <li>
-              <a>Arquivos locais</a>
+              <a href="asddsa">Arquivos locais</a>
             </li>
             <li>
-              <a>Vídeos</a>
+              <a href="asddsa">Vídeos</a>
             </li>
             <li>
-              <a>Podcasts</a>
+              <a href="asddsa">Podcasts</a>
             </li>
           </Nav>
 
