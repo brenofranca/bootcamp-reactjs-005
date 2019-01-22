@@ -11,6 +11,7 @@ export const Container = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: auto;
 
   > div {
     padding: 25px;
